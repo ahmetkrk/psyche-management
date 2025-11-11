@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
+// basit in-memory rate limit
 const RATE_LIMIT_WINDOW_MS = 60_000;
 const RATE_LIMIT_MAX = 60;
 const buckets = new Map<string, { count: number; ts: number }>();
@@ -19,11 +20,19 @@ function isRateLimited(ip: string) {
   return entry.count > RATE_LIMIT_MAX;
 }
 
+// tek pool
 let pgPool: any = null;
 async function getPgPool() {
   if (pgPool) return pgPool;
+
+  // TS burada şikayet ediyordu, susturalım
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-expect-error - 'pg' için tip yüklemedik, runtime'da var
   const { Pool } = await import("pg");
-  pgPool = new Pool({ connectionString: process.env.DATABASE_URL });
+
+  pgPool = new Pool({
+    connectionString: process.env.DATABASE_URL,
+  });
   return pgPool;
 }
 
@@ -50,13 +59,15 @@ export async function POST(req: NextRequest) {
     "page_location",
     "session_id",
     "timestamp",
-  ];
+  ] as const;
+
   const missing = required.filter((k) => !body[k]);
   if (missing.length) {
     console.error("analytics_invalid_event_missing_fields", { missing, body });
     return NextResponse.json({ ok: false, error: "missing_fields", missing }, { status: 400 });
   }
 
+  // DB varsa yaz, yoksa logla
   if (process.env.DATABASE_URL) {
     try {
       const pool = await getPgPool();
@@ -78,6 +89,7 @@ export async function POST(req: NextRequest) {
       );
     } catch (err) {
       console.error("analytics_db_write_error", err);
+      // build'i patlatmıyoruz
     }
   } else {
     console.info("analytics_event", body);
