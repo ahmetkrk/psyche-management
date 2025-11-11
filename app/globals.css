@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #060606;
+}
+
+body {
+  @apply min-h-screen bg-[#060606] text-slate-100;
+  background-image: radial-gradient(circle at top, rgba(255,119,15,0.17), rgba(6,6,6,0) 45%), radial-gradient(circle at 80% 20%, rgba(255,119,15,0.06), rgba(6,6,6,0) 55%);
+  background-attachment: fixed;
+}
+
+.card {
+  @apply border border-white/5 bg-black/40 rounded-xl;
+}
+
+input, textarea {
+  @apply bg-black/40 border border-white/5 rounded-md focus:border-brand-400 focus:outline-none;
+}
