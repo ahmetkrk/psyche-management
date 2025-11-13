@@ -9,7 +9,6 @@ const LINKS = [
   { href: "/insightlab", label: "InsightLab", section: "insidelab" },
   { href: "/studio", label: "Studio", section: "studio" },
   { href: "/echoes", label: "Echoes", section: "echoes" },
-  { href: "/contact", label: "Contact", section: "contact" },
 ];
 
 export function Navbar() {
