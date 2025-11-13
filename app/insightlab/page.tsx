@@ -1,57 +1,91 @@
 "use client";
 
 import { useEffect } from "react";
+import Link from "next/link";
 import { swbTrackPage, swbTrackClick } from "@/lib/analytics";
 
-const EPISODES = [
-  {
-    id: "ins-01",
-    title: "Energy mapping for long-term creators",
-    themes: ["Behavioral pacing", "Fatigue-proof systems", "AI-assisted outlining"],
-  },
-  {
-    id: "ins-02",
-    title: "Linking YouTube episodes to products",
-    themes: ["Content-to-commerce", "Lemon Squeezy", "Audience signaling"],
-  },
-  {
-    id: "ins-03",
-    title: "Soul-Web-Mind AI: a narrative layer",
-    themes: ["Personal myth", "AI as mirror", "Story-based retention"],
-  },
-];
+const EPISODE_1_URL = "https://www.youtube.com/watch?v=k6AddqLIbJA";
 
-export default function Page() {
+export default function InsightLabPage() {
   useEffect(() => {
-    swbTrackPage("insidelab", { source: "page_component" });
+    swbTrackPage("insightlab", { source: "insightlab_home_v1" });
   }, []);
+
   return (
-    <div className="max-w-6xl mx-auto py-10 px-4 space-y-8" data-analytics-id="insidelab_page">
-      <header className="space-y-3">
-        <p className="text-xs uppercase tracking-[0.35em] text-orange-200/70">InsightLab</p>
-        <h1 className="text-3xl font-bold text-white">Episodes & Core Themes</h1>
-        <p className="text-white/50 max-w-2xl text-sm">
-          Each episode is a dense unit. Click through to open a dedicated understanding layer for that topic.
+    <div className="max-w-5xl mx-auto py-16 px-4 space-y-12">
+      {/* HEADER */}
+      <section className="space-y-2">
+        <p className="text-orange-300/70 text-xs tracking-[0.35em] uppercase">
+          SWB-AI · INSIGHTLAB
         </p>
-      </header>
-      <div className="grid md:grid-cols-3 gap-5">
-        {EPISODES.map((ep) => (
-          <article key={ep.id} className="bg-white/5 border border-white/5 rounded-xl p-4 flex flex-col gap-3" data-analytics-id={`insidelab_episode_${ep.id}`}>
-            <h2 className="text-sm font-semibold text-white">{ep.title}</h2>
-            <ul className="space-y-1 text-xs text-white/50">
-              {ep.themes.map((t) => (
-                <li key={t}>• {t}</li>
-              ))}
+        <h1 className="text-3xl md:text-4xl font-bold text-white tracking-tight">
+          InsightLab – Strategic Thinking & Psyche Analysis
+        </h1>
+        <p className="text-gray-300 max-w-3xl">
+          Every episode is turned into structured insights: strategic thinking
+          patterns, cognitive models, behavioral maps, and distilled
+          takeaways extracted directly from the scripts.
+        </p>
+      </section>
+
+      {/* BIG RECTANGLE → YOUTUBE REDIRECT */}
+      <Link
+        href={EPISODE_1_URL}
+        target="_blank"
+        onClick={() =>
+          swbTrackClick("insightlab", "episode_1_open_youtube", {
+            episode: 1,
+            destination: EPISODE_1_URL,
+          })
+        }
+        className="block"
+      >
+        <section className="bg-white/5 border border-white/10 rounded-2xl p-8 hover:bg-white/10 transition cursor-pointer">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
+            <div>
+              <h2 className="text-xl md:text-2xl font-semibold text-white">
+                Episode 1 – Key Insights
+              </h2>
+              <p className="text-sm text-white/60">
+                Click to open the full episode on YouTube.
+              </p>
+            </div>
+            <div className="shrink-0">
+              <span className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg text-sm inline-flex items-center gap-2">
+                Watch on YouTube
+                <span className="text-xs">↗</span>
+              </span>
+            </div>
+          </div>
+
+          <div className="space-y-4">
+            <h3 className="text-white/90 font-medium text-sm uppercase tracking-wide">
+              Inside this episode
+            </h3>
+            <ul className="space-y-2 text-gray-300 text-sm">
+              <li>• Strategic thinking structures</li>
+              <li>• Cognitive and behavioral patterns</li>
+              <li>• Key takeaways & distilled insights</li>
+              <li>• Frameworks & mental models</li>
+              <li>• Articles and written reflections based on the episode</li>
             </ul>
-            <button
-              className="mt-auto inline-flex items-center gap-1 text-xs text-orange-200 hover:text-white transition"
-              onClick={() => swbTrackClick("insidelab", "open_episode", { id: ep.id })}
-            >
-              Open episode detail <span aria-hidden="true">→</span>
-            </button>
-          </article>
-        ))}
-      </div>
+            <p className="text-xs text-white/40 mt-3">
+              In the next phase, these will expand into full written pieces
+              extracted from the episode script.
+            </p>
+          </div>
+        </section>
+      </Link>
+
+      {/* FUTURE EPISODES PLACEHOLDER */}
+      <section className="space-y-4">
+        <h2 className="text-lg text-white/80">Upcoming Episodes</h2>
+        <p className="text-white/40 text-sm max-w-2xl">
+          Episode 2, 3, 4 and more will appear here as the YouTube series
+          continues. Each episode will have its own block with insights,
+          models and written analysis generated from the script.
+        </p>
+      </section>
     </div>
   );
 }
