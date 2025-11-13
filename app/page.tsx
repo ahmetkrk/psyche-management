@@ -1,148 +1,80 @@
 "use client";
 
 import { useEffect } from "react";
-import Link from "next/link";
 import { swbTrackPage, swbTrackClick } from "@/lib/analytics";
 
 export default function Page() {
   useEffect(() => {
-    swbTrackPage("iam", { source: "psyche_home_v1" });
+    swbTrackPage("iam", { source: "psyche_home_v2" });
   }, []);
 
   return (
     <div
-      className="max-w-6xl mx-auto py-10 px-4 space-y-16"
+      className="max-w-6xl mx-auto py-10 px-4 space-y-10"
       data-analytics-id="iam_page"
     >
-      {/* HERO */}
-      <section className="space-y-6" data-analytics-id="iam_hero">
+      {/* QUOTE */}
+      <section className="space-y-4" data-analytics-id="iam_quote">
         <p className="text-orange-300/80 text-xs tracking-[0.35em] uppercase">
-          SWB-AI · PSYCHE
+          PSYCHE · SWB-AI
         </p>
-        <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-white">
-          Psyche, zihin, AI ve müzikle uzun vadeli bir içsel gelişim ekosistemi.
-        </h1>
-        <p className="text-gray-300 text-lg md:text-xl max-w-3xl">
-          200 basamaklı Psyche yolculuğu, AI destekli müzikler ve modern psikoloji ile
-          içsel hizalanma, odaklanma ve dayanıklılık için tasarlanmış deneysel bir alan.
-        </p>
-
-        <div className="flex flex-col md:flex-row flex-wrap gap-4">
-          {/* SUPPORT */}
-          <Link href="#">
-            <button
-              className="px-6 py-3 bg-orange-500 rounded-lg hover:bg-orange-600 font-semibold"
-              data-analytics-id="iam_support_cta"
-              onClick={() =>
-                swbTrackClick("iam", "support_cta", { destination: "lemon_support" })
-              }
-            >
-              Support SWB-AI
-            </button>
-          </Link>
-
-          {/* PSYCHE MINI GUIDE */}
-          <Link href="#">
-            <button
-              className="px-6 py-3 bg-white text-black rounded-lg hover:bg-gray-200 font-semibold"
-              data-analytics-id="iam_psyche_guide_cta"
-              onClick={() =>
-                swbTrackClick("iam", "psyche_guide_cta", {
-                  destination: "lemon_psyche_guide",
-                })
-              }
-            >
-              Get Psyche Mini Guide
-            </button>
-          </Link>
-
-          {/* MUSIC PACK */}
-          <Link href="#">
-            <button
-              className="px-6 py-3 bg-blue-500 rounded-lg hover:bg-blue-600 font-semibold"
-              data-analytics-id="iam_music_pack_cta"
-              onClick={() =>
-                swbTrackClick("iam", "music_pack_cta", {
-                  destination: "lemon_music_pack_vol1",
-                })
-              }
-            >
-              Download Music Pack Vol. 1
-            </button>
-          </Link>
-
-          {/* COACHING */}
-          <a href="#coaching">
-            <button
-              className="px-6 py-3 bg-purple-600 rounded-lg hover:bg-purple-700 font-semibold"
-              data-analytics-id="iam_coaching_cta"
-              onClick={() =>
-                swbTrackClick("iam", "coaching_cta", { destination: "coaching_section" })
-              }
-            >
-              1:1 Coaching (Limited)
-            </button>
-          </a>
-        </div>
+        <blockquote className="border-l-2 border-orange-400/70 pl-4 text-lg md:text-2xl text-white/90 italic">
+          “The psyche doesn’t transform in one big moment, but in a thousand
+          honest conversations you have with yourself.”
+        </blockquote>
+        <p className="text-xs text-white/40">— SWB-AI</p>
       </section>
 
-      {/* WHAT IS SWB-AI */}
-      <section
-        className="space-y-4"
-        data-analytics-id="iam_what_is_swbai"
-      >
-        <h2 className="text-2xl md:text-3xl font-bold text-white">What is SWB-AI?</h2>
+      {/* WHO AM I */}
+      <section className="space-y-4" data-analytics-id="iam_about">
+        <h2 className="text-2xl md:text-3xl font-bold text-white">Who am I?</h2>
         <p className="text-gray-300 leading-relaxed max-w-3xl">
-          SWB-AI, insanın içsel yolculuğunu; psyche katmanları, modern psikoloji,
-          yapay zekâ, sanat ve müzikle birleştiren uzun vadeli bir gelişim ekosistemidir.
-          Amaç; içsel hizalanma, zihinsel berraklık, dayanıklılık ve kalıcı dönüşüm.
+          I am the creator of SWB-AI. My background blends law, industrial
+          engineering, machine learning and long-term practice in psychology and
+          self-experimentation. I&apos;ve spent years testing ideas in sport,
+          behavior, performance and inner work — not just in theory, but in
+          real life, under pressure.
         </p>
-      </section>
-
-      {/* PSYCHE 1–200 */}
-      <section
-        className="space-y-4"
-        data-analytics-id="iam_psyche_journey"
-      >
-        <h2 className="text-2xl md:text-3xl font-bold text-white">Psyche 1–200 Journey</h2>
-        <ul className="space-y-2 text-gray-300">
-          <li>• 1–15: Lower Psyche — Dürtüsel benlik ve gölge taraflar</li>
-          <li>• 16–29: Self-Critique Layer — Öz-eleştiri ve farkındalık</li>
-          <li>• 30–43: Inspired Psyche — İlham ve bilinç uyanışı</li>
-          <li>• 44–57: Calm Psyche — İç huzur ve denge</li>
-          <li>• 58–100: Mature Psyche — Olgunluk ve derin kabul</li>
-          <li>• 101–200: IQ/EQ Development — Zihin-duygu entegrasyonu ve metakognisyon</li>
-        </ul>
-        <p className="text-gray-400 text-sm">
-          Tam 200 basamaklık sistem, Psyche Mini Guide ve video serisi içinde açılacak.
+        <p className="text-gray-300 leading-relaxed max-w-3xl">
+          The Psyche framework is a 200-step map for inner alignment: from raw
+          impulses and chaos, to clarity, responsibility, emotional depth and
+          long-term resilience. Through videos, experiments, music and selective
+          1:1 coaching, I&apos;m building an ecosystem for people who want to do
+          the hard, boring, unglamorous work of real change.
         </p>
       </section>
 
       {/* COACHING */}
       <section
-        id="coaching"
         className="space-y-4"
         data-analytics-id="iam_coaching_section"
       >
         <h2 className="text-2xl md:text-3xl font-bold text-white">
-          1:1 Coaching (Limited Spots)
+          1:1 Coaching (Very Limited)
         </h2>
-        <p className="text-gray-300 leading-relaxed">
-          1:1 coaching seansları şu anda sınırlı sayıda ve yoğunluk nedeniyle herkesi
-          kabul edemiyorum. Başvuru yapmak için önce bana e-posta ile ulaşman gerekiyor.
-          Kısaca kim olduğunu, hangi konuda destek almak istediğini ve şu an nerede
-          takıldığını anlat.
+
+        <p className="text-gray-300 leading-relaxed max-w-3xl">
+          1:1 coaching is not a mass product here. I keep it intentionally
+          limited and only take on a small number of people at a time. If you
+          want to work together, the first step is a short email — there is no
+          automatic booking link on purpose.
         </p>
-        <p className="text-gray-300 leading-relaxed">
-          Uygun olduğum dönemlerde e-posta üzerinden geri dönüş yapıp detayları
-          paylaşıyorum. Eğer şu an yer yoksa, seni bekleme listesine alabiliyorum.
+
+        <p className="text-gray-300 leading-relaxed max-w-3xl">
+          In coaching we work on things like: inner alignment, discipline that
+          actually survives real life, focus, building systems for creative
+          work, and untangling patterns that keep repeating in your psyche.
+          It&apos;s practical, direct and sometimes uncomfortable — but always
+          pointed at real change, not motivational hype.
         </p>
 
         <div className="bg-white/5 border border-white/10 rounded-xl p-4 space-y-3">
-          <p className="text-sm text-gray-400">Başvuru için e-posta:</p>
+          <p className="text-sm text-white/60">
+            If you&apos;re interested, send a short email:
+          </p>
           <a
             href="mailto:contact@swb-ai.com?subject=Coaching%20Application"
-            className="text-lg font-semibold text-purple-300 hover:text-purple-200 break-all"
+            className="text-lg font-semibold text-orange-300 hover:text-orange-200 break-all"
             data-analytics-id="iam_coaching_email"
             onClick={() =>
               swbTrackClick("iam", "coaching_email_click", {
@@ -152,29 +84,62 @@ export default function Page() {
           >
             contact@swb-ai.com
           </a>
-          <p className="text-gray-400 text-sm">
-            E-postanda lütfen şunları kısaca yaz:
-            <br />– Kendini 2–3 cümleyle tanıt
-            <br />– Hangi konuda coaching istediğini anlat (psyche, odaklanma, içsel hizalanma, performans vs.)
-            <br />– Haftalık / aylık zaman ve bütçe beklentini kabaca belirt
+          <p className="text-xs text-white/50">
+            In your email, please include:
+            <br />– Who you are in 2–3 sentences
+            <br />– What you want coaching on (psyche, focus, performance, patterns…)
+            <br />– Your rough time and budget expectation
+          </p>
+          <p className="text-xs text-white/40">
+            I review requests manually. If there are no open slots, I&apos;ll
+            let you know and can place you on a waiting list.
           </p>
         </div>
       </section>
 
-      {/* ABOUT */}
+      {/* ANNOUNCEMENTS */}
       <section
-        className="space-y-4 mb-10"
-        data-analytics-id="iam_about"
+        className="space-y-4"
+        data-analytics-id="iam_announcements"
       >
-        <h2 className="text-2xl md:text-3xl font-bold text-white">About</h2>
-        <p className="text-gray-300 leading-relaxed max-w-3xl">
-          Ben SWB-AI’nin kurucusuyum. Avukatlık, endüstri mühendisliği,
-          makine öğrenmesi ve psikoloji alanlarındaki deneyimlerimi,
-          200 basamaklı bir Psyche yol haritası, video serileri, AI destekli
-          müzikler ve seçili 1:1 coaching seanslarıyla birleştiriyorum.
-          Amacım; insanlara uzun vadeli, gerçekçi ve pratik bir içsel dönüşüm
-          altyapısı sunmak.
-        </p>
+        <div className="flex items-center justify-between gap-4">
+          <h2 className="text-lg font-semibold text-white">Announcements</h2>
+          <span className="text-xs text-white/40">
+            Updated based on current focus
+          </span>
+        </div>
+
+        {/* 
+          These cards are placeholders.
+          You can change the titles and text anytime to match
+          your current agenda (new videos, music packs, cohorts, etc.).
+        */}
+        <div className="grid md:grid-cols-3 gap-4">
+          <div className="bg-white/5 border border-white/5 rounded-xl p-4">
+            <h3 className="text-sm font-medium text-white">
+              Psyche video series
+            </h3>
+            <p className="text-xs text-white/50">
+              Long-form episodes exploring the 200-step psyche map.
+            </p>
+          </div>
+          <div className="bg-white/5 border border-white/5 rounded-xl p-4">
+            <h3 className="text-sm font-medium text-white">
+              AI music experiments
+            </h3>
+            <p className="text-xs text-white/50">
+              Royalty-safe background tracks for deep work and reflection.
+            </p>
+          </div>
+          <div className="bg-white/5 border border-white/5 rounded-xl p-4">
+            <h3 className="text-sm font-medium text-white">
+              Coaching slots & waitlist
+            </h3>
+            <p className="text-xs text-white/50">
+              Spots open irregularly. Announced here and via email first.
+            </p>
+          </div>
+        </div>
       </section>
     </div>
   );
