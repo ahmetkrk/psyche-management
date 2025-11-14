@@ -23,7 +23,7 @@ export default function Page() {
         </p>
         <h1 className="text-2xl md:text-3xl font-semibold text-white">SWB-AI Studio Work</h1>
         <p className="text-white/55 max-w-2xl text-sm">
-          Everything here is designed as focused studio work. Choose what you need — or request a slot for automation work.
+          Everything here is designed as focused studio work. Choose what you need — music, visuals, experiments and support.
         </p>
       </header>
 
@@ -41,47 +41,25 @@ export default function Page() {
               <h2 className="text-sm font-semibold text-white">{p.title}</h2>
             </div>
             <p className="text-xs text-white/50 flex-1">{p.desc}</p>
-            <button
-              className="text-xs mt-auto inline-flex items-center gap-1 text-orange-200 hover:text-white transition"
-              onClick={() => swbTrackClick("studio", "open_product", { key: p.key })}
-            >
-              Open
-              <span className="text-[10px]">↗</span>
-            </button>
+
+            {p.key !== "ebook" && (
+              <a
+                href="https://swb-ai.lemonsqueezy.com/buy/ff2dbab4-067f-4cdc-875d-3871c53c0ab6"
+                target="_blank"
+                rel="noreferrer"
+                className="text-xs mt-auto inline-flex items-center gap-1 text-orange-200 hover:text-white transition"
+                onClick={() =>
+                  swbTrackClick("studio", "open_product", { key: p.key, destination: "https://swb-ai.lemonsqueezy.com/buy/ff2dbab4-067f-4cdc-875d-3871c53c0ab6" })
+                }
+              >
+                Open
+                <span className="text-[10px]">↗</span>
+              </a>
+            )}
           </div>
         ))}
       </div>
 
-      <section
-        className="bg-white/5 border border-white/5 rounded-xl p-6 space-y-4"
-        data-analytics-id="studio_automation_demand"
-      >
-        <h2 className="text-lg font-semibold text-white">Automation Demands</h2>
-        <p className="text-sm text-white/55 max-w-3xl">
-          Ongoing projects get priority. Tell me what you want to automate — I will return when a slot is available.
-        </p>
-        <form
-          className="grid md:grid-cols-3 gap-4"
-          onSubmit={(e) => {
-            e.preventDefault();
-            swbTrackClick("studio", "submit_automation", {});
-          }}
-        >
-          <input
-            className="bg-black/30 border border-white/10 rounded-md px-3 py-2 text-sm"
-            placeholder="Your email"
-          />
-          <input
-            className="bg-black/30 border border-white/10 rounded-md px-3 py-2 text-sm"
-            placeholder="Topic (e.g. YouTube automation)"
-          />
-          <button
-            className="bg-orange-500 rounded-md text-sm font-medium px-4 py-2 hover:bg-orange-400 transition"
-            type="submit"
-          >
-            Send request
-          </button>
-        </form>
       </section>
     </div>
   );
