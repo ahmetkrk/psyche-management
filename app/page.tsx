@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { swbTrackPage, swbTrackClick } from "@/lib/analytics";
+import { swbTrackPage } from "@/lib/analytics";
 
 export default function Page() {
   useEffect(() => {
@@ -29,70 +29,24 @@ export default function Page() {
       <section className="space-y-4" data-analytics-id="iam_about">
         <h2 className="text-2xl md:text-3xl font-bold text-white">Who am I?</h2>
         <p className="text-gray-300 leading-relaxed max-w-3xl mx-auto">
-          I am the creator of SWB-AI. My background blends law, industrial
-          engineering, machine learning and long-term practice in psychology and
-          self-experimentation. I&apos;ve spent years testing ideas in sport,
-          behavior, performance and inner work — not just in theory, but in
-          real life, under pressure.
+          I&apos;m the creator of SWB-AI. My path moves across law, industrial
+          engineering, aviation, prompt engineering and machine learning. I&apos;ve
+          worked inside complex systems — airlines, contracts, operations — while
+          constantly building my own tools on the side.
         </p>
         <p className="text-gray-300 leading-relaxed max-w-3xl mx-auto">
-          The Psyche framework is a 200-step map for inner alignment: from raw
-          impulses and chaos, to clarity, responsibility, emotional depth and
-          long-term resilience. Through videos, experiments, music and selective
-          1:1 coaching, I&apos;m building an ecosystem for people who want to do
-          the hard, unglamorous work of real change.
+          Over the years I wrote and tested my own quantum-inspired code,
+          custom ML experiments and automation flows. Not as abstract research,
+          but in real constraints: time pressure, fatigue, travel, sport,
+          money, relationships. I care about how ideas survive contact with
+          reality.
         </p>
-      </section>
-
-      {/* COACHING */}
-      <section
-        className="space-y-4"
-        data-analytics-id="iam_coaching_section"
-      >
-        <h2 className="text-2xl md:text-3xl font-bold text-white">
-          1:1 Coaching (Very Limited)
-        </h2>
-
         <p className="text-gray-300 leading-relaxed max-w-3xl mx-auto">
-          1:1 coaching is intentionally limited. I only work with a small number
-          of people at a time. There is no automatic calendar link on purpose —
-          the first step is a short, honest email.
+          SWB-AI and the Psyche framework are the result: a long-term ecosystem
+          for inner alignment, strategic thinking and creative work. It connects
+          psyche work, AI, music and systems-thinking into something you can
+          actually live with — not just consume as content.
         </p>
-
-        <p className="text-gray-300 leading-relaxed max-w-3xl mx-auto">
-          We work on things like: inner alignment, discipline that survives real
-          life, focus, systems for creative work, and untangling patterns that
-          keep repeating in your psyche. It&apos;s practical, direct and
-          sometimes uncomfortable — but always pointed at real change, not hype.
-        </p>
-
-        <div className="bg-white/5 border border-white/10 rounded-xl p-4 space-y-3 max-w-xl mx-auto text-left md:text-center">
-          <p className="text-sm text-white/60">
-            If you&apos;re interested, send a short email:
-          </p>
-          <a
-            href="mailto:contact@swb-ai.com?subject=Coaching%20Application"
-            className="text-lg font-semibold text-orange-300 hover:text-orange-200 break-all"
-            data-analytics-id="iam_coaching_email"
-            onClick={() =>
-              swbTrackClick("iam", "coaching_email_click", {
-                destination: "mailto_contact",
-              })
-            }
-          >
-            contact@swb-ai.com
-          </a>
-          <p className="text-xs text-white/50">
-            In your email, please include:
-            <br />– Who you are in 2–3 sentences
-            <br />– What you want coaching on (psyche, focus, performance, patterns…)
-            <br />– Your rough time and budget expectation
-          </p>
-          <p className="text-xs text-white/40">
-            I review requests manually. If there are no open slots, I&apos;ll
-            let you know and can place you on a waiting list.
-          </p>
-        </div>
       </section>
 
       {/* ANNOUNCEMENTS */}
@@ -125,10 +79,10 @@ export default function Page() {
           </div>
           <div className="bg-white/5 border border-white/5 rounded-xl p-4">
             <h3 className="text-sm font-medium text-white">
-              Coaching slots & waitlist
+              Coaching & mentorship
             </h3>
             <p className="text-xs text-white/50">
-              Spots open irregularly. Announced here and via email first.
+              Very limited 1:1 work, announced first through Echoes.
             </p>
           </div>
         </div>

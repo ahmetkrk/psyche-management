@@ -41,22 +41,13 @@ export default function Page() {
               <h2 className="text-sm font-semibold text-white">{p.title}</h2>
             </div>
             <p className="text-xs text-white/50 flex-1">{p.desc}</p>
-            
-{p.key !== "ebook" && (
-  <a
-    href="https://swb-ai.lemonsqueezy.com/buy/ff2dbab4-067f-4cdc-875d-3871c53c0ab6"
-    target="_blank"
-    rel="noreferrer"
-    className="text-xs mt-auto inline-flex items-center gap-1 text-orange-200 hover:text-white transition"
-    onClick={() =>
-      swbTrackClick("studio", "open_product", { key: p.key, destination: "https://swb-ai.lemonsqueezy.com/buy/ff2dbab4-067f-4cdc-875d-3871c53c0ab6" })
-    }
-  >
-    Open
-    <span className="text-[10px]">↗</span>
-  </a>
-)}
-
+            <button
+              className="text-xs mt-auto inline-flex items-center gap-1 text-orange-200 hover:text-white transition"
+              onClick={() => swbTrackClick("studio", "open_product", { key: p.key })}
+            >
+              Open
+              <span className="text-[10px]">↗</span>
+            </button>
           </div>
         ))}
       </div>
