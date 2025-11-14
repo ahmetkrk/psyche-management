@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import Link from "next/link";
 import { swbTrackPage } from "@/lib/analytics";
 
 export default function Page() {
@@ -23,30 +24,37 @@ export default function Page() {
           honest conversations you have with yourself.”
         </blockquote>
         <p className="text-xs text-white/40">— SWB-AI</p>
+        <div className="flex justify-center">
+          <Link
+            href="/iam/quote"
+            className="text-[11px] uppercase tracking-[0.25em] text-orange-300/80 hover:text-orange-200"
+          >
+            Open the full reflection →
+          </Link>
+        </div>
       </section>
 
       {/* WHO AM I */}
       <section className="space-y-4" data-analytics-id="iam_about">
         <h2 className="text-2xl md:text-3xl font-bold text-white">Who am I?</h2>
         <p className="text-gray-300 leading-relaxed max-w-3xl mx-auto">
-          I&apos;m the creator of SWB-AI. My path moves across law, industrial
-          engineering, aviation, prompt engineering and machine learning. I&apos;ve
-          worked inside complex systems — airlines, contracts, operations — while
-          constantly building my own tools on the side.
+          I&apos;m the creator of SWB-AI. My path moves across law, industrial engineering,
+          aviation, prompt engineering and machine learning. I&apos;ve worked inside complex
+          systems — airlines, contracts, operations — while constantly building my own tools
+          on the side.
         </p>
-        <p className="text-gray-300 leading-relaxed max-w-3xl mx-auto">
-          Over the years I wrote and tested my own quantum-inspired code,
-          custom ML experiments and automation flows. Not as abstract research,
-          but in real constraints: time pressure, fatigue, travel, sport,
-          money, relationships. I care about how ideas survive contact with
-          reality.
+        <p className="text-gray-400 text-sm max-w-3xl mx-auto">
+          If you want the full story — how sport, travel, code and real constraints shaped this
+          ecosystem — you can read the extended version.
         </p>
-        <p className="text-gray-300 leading-relaxed max-w-3xl mx-auto">
-          SWB-AI and the Psyche framework are the result: a long-term ecosystem
-          for inner alignment, strategic thinking and creative work. It connects
-          psyche work, AI, music and systems-thinking into something you can
-          actually live with — not just consume as content.
-        </p>
+        <div className="flex justify-center">
+          <Link
+            href="/iam/who"
+            className="text-xs uppercase tracking-[0.25em] text-orange-300/80 hover:text-orange-200"
+          >
+            Read the full story →
+          </Link>
+        </div>
       </section>
 
       {/* ANNOUNCEMENTS */}
@@ -59,6 +67,14 @@ export default function Page() {
           This space will be updated based on what&apos;s actually live:
           episodes, experiments, music packs, cohorts and new projects.
         </p>
+        <div className="flex justify-center">
+          <Link
+            href="/iam/announcements"
+            className="text-[11px] uppercase tracking-[0.25em] text-orange-300/80 hover:text-orange-200"
+          >
+            How I use announcements →
+          </Link>
+        </div>
 
         <div className="grid md:grid-cols-3 gap-4 max-w-4xl mx-auto text-left">
           <div className="bg-white/5 border border-white/5 rounded-xl p-4">

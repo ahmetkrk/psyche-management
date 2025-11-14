@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect } from "react";
-import { swbTrackPage } from "@/lib/analytics";
+import Link from "next/link";
+import { swbTrackPage, swbTrackClick } from "@/lib/analytics";
 
 export default function EchoTopicPage() {
   useEffect(() => {
@@ -30,7 +31,19 @@ export default function EchoTopicPage() {
             <li className="text-sm text-white/70">• If you zoomed out 5–10 years, what would you wish you had started earlier?</li>
             <li className="text-sm text-white/70">• What are you secretly optimizing for — safety, status, freedom, impact, or something else?</li>
         </ul>
-      </section>
+            <div className="pt-6">
+        <Link
+          href="/echoes"
+          onClick={() =>
+            swbTrackClick("echoes_topic", "back_to_echoes", { topic: "strategic-thinking" })
+          }
+          className="text-sm text-orange-300 hover:text-orange-200"
+        >
+          ← Back to Echoes
+        </Link>
+      </div>
+
+</section>
     </div>
   );
 }

@@ -6,7 +6,7 @@ import { swbTrackPage, swbTrackClick } from "@/lib/analytics";
 const PRODUCTS = [
   { key: "ai_music", title: "AI Music", desc: "Royalty-safe background tracks for your content.", tag: "" },
   { key: "ai_visual", title: "AI Visualization", desc: "High-impact AI visuals and cover artwork.", tag: "" },
-  { key: "ebook", title: "E-book", desc: "The e-book will be released soon.", tag: "" },
+  { key: "ebook", title: "E-book", desc: "Short experimental e-books built from real daily moments, psyche work and Trial & Error notes.", tag: "" },
   { key: "donate", title: "Donate & Support", desc: "Support the studio to create more.", tag: "Support" },
 ];
 
@@ -28,38 +28,45 @@ export default function Page() {
       </header>
 
       <div className="grid md:grid-cols-4 gap-5">
-        {PRODUCTS.map((p) => (
-          <div
-            key={p.key}
-            className="bg-white/5 border border-white/10 rounded-xl p-4 flex flex-col gap-3"
-            data-analytics-id={`studio_${p.key}`}
-          >
-            <div>
-              <p className="text-[10px] uppercase tracking-[0.25em] text-orange-200/70 mb-1">
-                {p.tag}
-              </p>
-              <h2 className="text-sm font-semibold text-white">{p.title}</h2>
-            </div>
-            <p className="text-xs text-white/50 flex-1">{p.desc}</p>
-
-            {p.key !== "ebook" && (
-              <a
-                href="https://swb-ai.lemonsqueezy.com/buy/ff2dbab4-067f-4cdc-875d-3871c53c0ab6"
-                target="_blank"
-                rel="noreferrer"
-                className="text-xs mt-auto inline-flex items-center gap-1 text-orange-200 hover:text-white transition"
-                onClick={() =>
-                  swbTrackClick("studio", "open_product", { key: p.key, destination: "https://swb-ai.lemonsqueezy.com/buy/ff2dbab4-067f-4cdc-875d-3871c53c0ab6" })
+        {PRODUCTS.map((p) => {
+          const isEbook = p.key === "ebook";
+          return (
+            <div
+              key={p.key}
+              className={`bg-white/5 border border-white/10 rounded-xl p-4 flex flex-col gap-3 ${
+                isEbook ? "cursor-pointer hover:bg-white/10 transition" : ""
+              }`}
+              data-analytics-id={`studio_${p.key}`}
+              onClick={() => {
+                if (isEbook) {
+                  swbTrackClick("studio", "ebook_info_open", { key: p.key });
+                  window.location.href = "/studio/ebooks";
                 }
-              >
-                Open
-                <span className="text-[10px]">↗</span>
-              </a>
-            )}
-          </div>
-        ))}
-      </div>
+              }}
+            >
+              <div>
+                <p className="text-[10px] uppercase tracking-[0.25em] text-orange-200/70 mb-1">
+                  {p.tag}
+                </p>
+                <h2 className="text-sm font-semibold text-white">{p.title}</h2>
+              </div>
+              <p className="text-xs text-white/50 flex-1">{p.desc}</p>
 
-    </div>
-  );
-}
+              {!isEbook && (
+                <a
+                  href="https://swb-ai.lemonsqueezy.com/buy/ff2dbab4-067f-4cdc-875d-3871c53c0ab6"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-xs mt-auto inline-flex items-center gap-1 text-orange-200 hover:text-white transition"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    swbTrackClick("studio", "open_product", { key: p.key });
+                  }}
+                >
+                  Open
+                  <span className="text-[10px]">↗</span>
+                </a>
+              )}
+            </div>
+          );
+        })}

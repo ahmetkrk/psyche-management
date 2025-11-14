@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect } from "react";
-import { swbTrackPage } from "@/lib/analytics";
+import Link from "next/link";
+import { swbTrackPage, swbTrackClick } from "@/lib/analytics";
 
 export default function EchoTopicPage() {
   useEffect(() => {
@@ -30,7 +31,19 @@ export default function EchoTopicPage() {
             <li className="text-sm text-white/70">• Which tools are you already using (or avoiding)?</li>
             <li className="text-sm text-white/70">• If one process in your life became 10x smoother, which one would change the most things downstream?</li>
         </ul>
-      </section>
+            <div className="pt-6">
+        <Link
+          href="/echoes"
+          onClick={() =>
+            swbTrackClick("echoes_topic", "back_to_echoes", { topic: "automation-systems" })
+          }
+          className="text-sm text-orange-300 hover:text-orange-200"
+        >
+          ← Back to Echoes
+        </Link>
+      </div>
+
+</section>
     </div>
   );
 }

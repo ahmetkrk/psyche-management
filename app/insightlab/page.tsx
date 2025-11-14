@@ -77,6 +77,40 @@ export default function InsightLabPage() {
         </section>
       </Link>
 
+      {/* EPISODE 1 NOTES: INTAKE & EXTRACTS */}
+      <section className="grid md:grid-cols-2 gap-4">
+        <div className="bg-white/5 border border-white/10 rounded-xl p-4 space-y-2">
+          <h3 className="text-sm font-semibold text-white uppercase tracking-[0.18em]">
+            Intake – what I&apos;m listening for
+          </h3>
+          <p className="text-xs text-white/65">
+            Episode 1 is not just an intro; it&apos;s where we set the lens. I&apos;m listening for how you think about
+            who you are, what you&apos;re building and what you&apos;re afraid to say out loud.
+          </p>
+          <ul className="text-xs text-white/55 space-y-1">
+            <li>• How you describe yourself under pressure.</li>
+            <li>• Which parts of your story you repeat — and which parts you skip.</li>
+            <li>• The gap between what you say you value and how you actually spend time.</li>
+          </ul>
+        </div>
+
+        <div className="bg-white/5 border border-white/10 rounded-xl p-4 space-y-2">
+          <h3 className="text-sm font-semibold text-white uppercase tracking-[0.18em]">
+            Extracts – what this episode teaches
+          </h3>
+          <p className="text-xs text-white/65">
+            The first episode is a map of &quot;Who am I and what am I teaching?&quot; It frames PSYCHE, SWB-AI and the
+            kind of long-term work we&apos;ll do together.
+          </p>
+          <ul className="text-xs text-white/55 space-y-1">
+            <li>• Why Trial &amp; Error matters more than perfection.</li>
+            <li>• How sport, travel and code shape the way I see systems.</li>
+            <li>• What you can expect from the series in terms of depth and pace.</li>
+          </ul>
+        </div>
+      </section>
+
+
       {/* FUTURE EPISODES PLACEHOLDER */}
       <section className="space-y-4">
         <h2 className="text-lg text-white/80">Upcoming Episodes</h2>
