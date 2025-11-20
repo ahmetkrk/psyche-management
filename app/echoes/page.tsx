@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { swbTrackPage, swbTrackClick } from "@/lib/analytics";
 
-const EMAIL = "swbaiglobal@gmail.com";
+const EMAIL = "contact@swb-ai.com";
 
 const TOPICS = [
   "Automation & systems – tools, workflows, code",
