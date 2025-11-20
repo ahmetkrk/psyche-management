@@ -49,7 +49,7 @@ function getHrefForProduct(key: ProductKey): string {
     case "ebook":
       return "/studio/ebooks";
     case "donate":
-      // TODO: Buraya Lemon Squeezy donation checkout linkini koy
+      // Lemon Squeezy donation checkout linkin
       return "https://swb-ai.lemonsqueezy.com/buy/5383f5a9-5a17-4e90-96d9-bb4cd3fff4d6";
     default:
       return "/studio";
@@ -86,21 +86,13 @@ export default function StudioPage() {
           const href = getHrefForProduct(product.key);
           const isDonate = product.key === "donate";
 
-          return (
-            <Link
-              key={product.key}
-              href={href}
-              onClick={() =>
-                swbTrackClick("studio", "open_product", {
-                  product: product.key,
-                  via: "card",
-                })
-              }
-              className={[
-                "group relative flex flex-col justify-between rounded-2xl border border-orange-500/20 bg-black/60 p-6 hover:border-orange-400/60 hover:bg-black/80 transition",
-                isDonate ? "md:col-span-2 md:flex-row md:items-center" : "",
-              ].join(" ")}
-            >
+          const cardClasses = [
+            "group relative flex flex-col justify-between rounded-2xl border border-orange-500/20 bg-black/60 p-6 hover:border-orange-400/60 hover:bg-black/80 transition",
+            isDonate ? "md:col-span-2 md:flex-row md:items-center" : "",
+          ].join(" ");
+
+          const inner = (
+            <>
               <div className="space-y-2">
                 <div className="flex items-center gap-2">
                   <h2 className="text-lg md:text-xl font-semibold text-white">
@@ -114,17 +106,51 @@ export default function StudioPage() {
               </div>
 
               <div className="mt-4 md:mt-0 md:text-right">
-                <span
-                  className="inline-flex items-center gap-2 text-xs font-medium text-orange-200 group-hover:text-white"
-                >
-                  {product.key === "donate"
-                    ? "Open donation checkout"
-                    : "Enter section"}
+                <span className="inline-flex items-center gap-2 text-xs font-medium text-orange-200 group-hover:text-white">
+                  {isDonate ? "Open donation checkout" : "Enter section"}
                   <span className="text-orange-300 group-hover:translate-x-0.5 transition-transform">
                     →
                   </span>
                 </span>
               </div>
+            </>
+          );
+
+          // Donation: dış link, normal <a>
+          if (isDonate) {
+            return (
+              <a
+                key={product.key}
+                href={href}
+                target="_blank"
+                rel="noreferrer"
+                onClick={() =>
+                  swbTrackClick("studio", "open_product", {
+                    product: product.key,
+                    via: "card",
+                  })
+                }
+                className={cardClasses}
+              >
+                {inner}
+              </a>
+            );
+          }
+
+          // Diğerleri: iç route, Next Link
+          return (
+            <Link
+              key={product.key}
+              href={href}
+              onClick={() =>
+                swbTrackClick("studio", "open_product", {
+                  product: product.key,
+                  via: "card",
+                })
+              }
+              className={cardClasses}
+            >
+              {inner}
             </Link>
           );
         })}
