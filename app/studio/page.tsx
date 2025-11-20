@@ -50,7 +50,7 @@ function getHrefForProduct(key: ProductKey): string {
       return "/studio/ebooks";
     case "donate":
       // TODO: Buraya Lemon Squeezy donation checkout linkini koy
-      return "YOUR_DONATION_CHECKOUT_URL_HERE";
+      return "https://swb-ai.lemonsqueezy.com/buy/5383f5a9-5a17-4e90-96d9-bb4cd3fff4d6";
     default:
       return "/studio";
   }
