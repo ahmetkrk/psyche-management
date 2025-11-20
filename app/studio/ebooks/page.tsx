@@ -6,33 +6,65 @@ import { swbTrackPage, swbTrackClick } from "@/lib/analytics";
 
 export default function StudioEbooksPage() {
   useEffect(() => {
-    swbTrackPage("studio_ebooks", { source: "studio_ebooks_link" });
+    swbTrackPage("studio_ebooks", { source: "studio" });
   }, []);
 
   return (
-    <div className="max-w-4xl mx-auto py-16 px-4 space-y-8" data-analytics-id="studio_ebooks">
+    <div
+      className="max-w-4xl mx-auto py-16 px-4 space-y-8"
+      data-analytics-id="studio_ebooks"
+    >
       <header className="space-y-3 text-left md:text-center">
         <p className="text-orange-300/80 text-[10px] tracking-[0.35em] uppercase">
           Studio · E-books
         </p>
-        <h1 className="text-2xl md:text-3xl font-bold text-white">
-          Experimental e-books from real daily moments
+        <h1 className="text-3xl md:text-4xl font-semibold tracking-tight text-white">
+          Psyche System E-Book
         </h1>
+        <p className="text-sm md:text-base text-gray-300 max-w-2xl mx-0 md:mx-auto">
+          A written companion to the Psyche System videos: 200 steps of Nafs +
+          IQ/EQ development, structured as a practical roadmap instead of
+          abstract theory.
+        </p>
       </header>
 
-      <section className="space-y-4 text-sm text-white/80">
+      <section className="space-y-4 text-sm text-gray-200">
         <p>
-          The e-books I&apos;m building here are not traditional &quot;self-help&quot; volumes. They&apos;re short,
-          focused pieces built from real situations: travel, fatigue, training, conflict, alignment, misalignment.
+          The first e-book focuses on the{" "}
+          <strong>“200 Basamak: Nefs + IQ/EQ Gelişim Yol Haritası”</strong>.
+          It breaks down the journey from Nefs-i Emmâre to higher awareness
+          into clear, named stages with concrete examples.
         </p>
         <p>
-          Each one is closer to a field report than a polished essay — snapshots of how psyche work, systems thinking and
-          Trial &amp; Error show up in actual days. You can read them in one sitting and come back to specific passages
-          when you need a pattern or a question.
+          Each stage is designed to be <strong>actionable</strong>: what you
+          feel, what usually goes wrong, and what micro-actions can move you to
+          the next level. The goal is not just to understand the map, but to
+          actually move on it.
         </p>
+        <ul className="list-disc list-inside space-y-2 text-gray-300 mt-2">
+          <li>1–100: Nefs stages, from raw impulses to disciplined self.</li>
+          <li>IQ & EQ integration: thinking clearly while feeling deeply.</li>
+          <li>
+            Reflection prompts and journaling questions for each chapter
+            (practice, not just reading).
+          </li>
+          <li>
+            Optional checklists to track your own progress along the 200-step
+            path.
+          </li>
+        </ul>
+        <p className="pt-2 text-gray-400">
+          Status: <span className="text-orange-300">Writing in progress.</span>{" "}
+          Early chapters will be tested in video format first, then refined into
+          the written version.
+        </p>
+      </section>
+
+      <section className="space-y-3 text-xs text-gray-500">
         <p>
-          Over time there will be multiple small e-books instead of one giant book: different angles, different seasons,
-          different questions. When they&apos;re ready, they&apos;ll appear here and in the Studio overview.
+          If you want this e-book to go live faster, supporting the project via
+          the Donation option in Studio directly helps to buy more time and
+          tools for writing, editing and translation.
         </p>
       </section>
 
