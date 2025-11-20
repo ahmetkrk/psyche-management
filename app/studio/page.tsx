@@ -1,74 +1,146 @@
 "use client";
 
+import { useEffect } from "react";
 import Link from "next/link";
+import { swbTrackPage, swbTrackClick } from "@/lib/analytics";
+
+type ProductKey = "music" | "visual" | "ebook" | "donate";
+
+type Product = {
+  key: ProductKey;
+  title: string;
+  desc: string;
+  tag: string;
+};
+
+const PRODUCTS: Product[] = [
+  {
+    key: "music",
+    title: "Music Studio",
+    desc: "AI-created background music and producer stem packs for videos, podcasts and deep-work sessions.",
+    tag: "Available now",
+  },
+  {
+    key: "visual",
+    title: "AI Visualization",
+    desc: "Upcoming visual packs: psyche maps, chapter art and AI-generated backgrounds for the Psyche System journey.",
+    tag: "In preparation",
+  },
+  {
+    key: "ebook",
+    title: "Psyche System E-Book",
+    desc: "A structured guide to the 200-step Nafs + IQ/EQ roadmap, with practical exercises and reflections.",
+    tag: "Writing in progress",
+  },
+  {
+    key: "donate",
+    title: "Support & Donation",
+    desc: "Support the long-form content, research, AI tooling and free education around the Psyche System.",
+    tag: "Direct support",
+  },
+];
+
+function getHrefForProduct(key: ProductKey): string {
+  switch (key) {
+    case "music":
+      return "/studio/music";
+    case "visual":
+      return "/studio/visual";
+    case "ebook":
+      return "/studio/ebooks";
+    case "donate":
+      // TODO: Buraya Lemon Squeezy donation checkout linkini koy
+      return "YOUR_DONATION_CHECKOUT_URL_HERE";
+    default:
+      return "/studio";
+  }
+}
 
 export default function StudioPage() {
+  useEffect(() => {
+    swbTrackPage("studio", { source: "nav_studio" });
+  }, []);
+
   return (
-    <div className="min-h-screen bg-black text-white px-6 py-20">
-      <div className="max-w-5xl mx-auto space-y-16">
-        
-        {/* PAGE TITLE */}
-        <div className="text-center space-y-2">
-          <h1 className="text-4xl font-bold tracking-tight">SWB-AI Studio</h1>
-          <p className="text-gray-400">Music Packs, Stems, Donations & Upcoming E-Book</p>
-        </div>
+    <div
+      className="max-w-5xl mx-auto py-16 px-4 space-y-10"
+      data-analytics-id="studio"
+    >
+      {/* Header */}
+      <header className="space-y-3 text-left md:text-center">
+        <p className="text-orange-300/80 text-[10px] tracking-[0.35em] uppercase">
+          Studio
+        </p>
+        <h1 className="text-3xl md:text-4xl font-semibold tracking-tight text-white">
+          SWB-AI Studio
+        </h1>
+        <p className="text-sm md:text-base text-gray-300 max-w-2xl mx-0 md:mx-auto">
+          A focused space for everything that comes out of the Psyche System:
+          music, AI visualizations, e-books and direct support for the project.
+        </p>
+      </header>
 
-        {/* PRODUCTS GRID */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+      {/* Grid of studio entries */}
+      <section className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {PRODUCTS.map((product) => {
+          const href = getHrefForProduct(product.key);
+          const isDonate = product.key === "donate";
 
-          {/* MUSIC PACK */}
-          <div className="border border-gray-700 rounded-2xl p-8 bg-gray-900/40 hover:bg-gray-900/70 duration-200">
-            <h2 className="text-2xl font-semibold mb-3">Music Pack</h2>
-            <p className="text-gray-400 mb-6">
-              AI-created cinematic background tracks for content creators. Volume 1 available soon.
-            </p>
+          return (
             <Link
-              href="#"
-              className="inline-block px-5 py-3 bg-white text-black rounded-xl font-semibold hover:bg-gray-300 duration-150"
+              key={product.key}
+              href={href}
+              onClick={() =>
+                swbTrackClick("studio", "open_product", {
+                  product: product.key,
+                  via: "card",
+                })
+              }
+              className={[
+                "group relative flex flex-col justify-between rounded-2xl border border-orange-500/20 bg-black/60 p-6 hover:border-orange-400/60 hover:bg-black/80 transition",
+                isDonate ? "md:col-span-2 md:flex-row md:items-center" : "",
+              ].join(" ")}
             >
-              Coming Soon
+              <div className="space-y-2">
+                <div className="flex items-center gap-2">
+                  <h2 className="text-lg md:text-xl font-semibold text-white">
+                    {product.title}
+                  </h2>
+                  <span className="text-[10px] uppercase tracking-[0.2em] text-orange-300/80">
+                    {product.tag}
+                  </span>
+                </div>
+                <p className="text-sm text-gray-300">{product.desc}</p>
+              </div>
+
+              <div className="mt-4 md:mt-0 md:text-right">
+                <span
+                  className="inline-flex items-center gap-2 text-xs font-medium text-orange-200 group-hover:text-white"
+                >
+                  {product.key === "donate"
+                    ? "Open donation checkout"
+                    : "Enter section"}
+                  <span className="text-orange-300 group-hover:translate-x-0.5 transition-transform">
+                    →
+                  </span>
+                </span>
+              </div>
             </Link>
-          </div>
+          );
+        })}
+      </section>
 
-          {/* STEM PACK */}
-          <div className="border border-gray-700 rounded-2xl p-8 bg-gray-900/40 hover:bg-gray-900/70 duration-200">
-            <h2 className="text-2xl font-semibold mb-3">Producer Stem Pack</h2>
-            <p className="text-gray-400 mb-6">
-              Full quality WAV stems for producers and sound designers. Commercial license included.
-            </p>
-            <Link
-              href="https://swb-ai.lemonsqueezy.com/buy/e34480a1-860d-44c2-b9d5-a79f4b986798"
-              className="inline-block px-5 py-3 bg-white text-black rounded-xl font-semibold hover:bg-gray-300 duration-150"
-            >
-              Buy Stems Pack
-            </Link>
-          </div>
-        </div>
-
-        {/* DONATION BOX */}
-        <div className="mt-10 border border-yellow-500 rounded-2xl p-10 bg-yellow-500/10 text-center">
-          <h2 className="text-3xl font-bold mb-3">Support the SWB-AI Project</h2>
-          <p className="text-gray-300 max-w-xl mx-auto mb-6">
-            Help the development of long-form educational content, research, AI-generated music and the Psyche System framework.
-          </p>
-          <Link
-            href="#"
-            className="inline-block px-6 py-4 bg-yellow-500 text-black rounded-xl font-semibold hover:bg-yellow-400 duration-150"
-          >
-            Donate
-          </Link>
-        </div>
-
-        {/* EBOOK PREVIEW */}
-        <div className="mt-20 border border-gray-700 rounded-2xl p-10 bg-gray-900/40">
-          <h2 className="text-3xl font-semibold mb-4">Upcoming E-Book</h2>
-          <p className="text-gray-400 max-w-2xl mb-6">
-            Detailed explanation of the Psyche System, structural awareness model, mental architecture
-            and practical applications. Coming soon.
-          </p>
-          <div className="text-gray-600 italic">E-Book is in preparation. Release date will be announced.</div>
-        </div>
-
+      {/* Back link */}
+      <div className="pt-4">
+        <Link
+          href="/"
+          className="text-sm text-orange-300 hover:text-orange-200"
+          onClick={() =>
+            swbTrackClick("studio", "back_to_home", { from: "studio" })
+          }
+        >
+          ← Back to I AM
+        </Link>
       </div>
     </div>
   );
