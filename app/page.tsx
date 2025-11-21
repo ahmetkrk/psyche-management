@@ -15,6 +15,11 @@ export default function Page() {
       className="min-h-screen max-w-5xl mx-auto py-16 px-4 space-y-16 text-center flex flex-col justify-center"
       data-analytics-id="iam_page"
     >
+           {/* SOCIAL ICONS TOP RIGHT */}
+      <div className="w-full flex justify-end mb-6">
+        <SocialLinks />
+      </div>
+
       {/* QUOTE */}
       <section className="space-y-4" data-analytics-id="iam_quote">
         <p className="text-orange-300/80 text-xs tracking-[0.35em] uppercase">
