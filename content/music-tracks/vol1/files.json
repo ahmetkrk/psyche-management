@@ -1,0 +1,16 @@
+[
+  {
+    "type": "full-track",
+    "name": "Foundations_MainTheme",
+    "format": "WAV",
+    "length": "2:30",
+    "downloadUrl": "#"
+  },
+  {
+    "type": "stem",
+    "name": "Foundations_Drums",
+    "format": "WAV",
+    "length": "2:30",
+    "downloadUrl": "#"
+  }
+]
