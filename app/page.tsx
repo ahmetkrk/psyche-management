@@ -15,7 +15,7 @@ export default function Page() {
       className="min-h-screen max-w-5xl mx-auto py-16 px-4 space-y-16 text-center flex flex-col justify-center"
       data-analytics-id="iam_page"
     >
-           {/* SOCIAL ICONS TOP RIGHT */}
+      {/* SOCIAL ICONS TOP RIGHT */}
       <div className="w-full flex justify-end mb-6">
         <SocialLinks />
       </div>
@@ -110,8 +110,9 @@ export default function Page() {
           </div>
         </div>
 
-        {/* New releases / upcoming / socials */}
+        {/* New releases / upcoming */}
         <div className="space-y-4 max-w-4xl mx-auto pt-4 border-t border-white/5">
+
           {/* Latest Music Release */}
           <div className="bg-gradient-to-r from-orange-500/10 via-white/5 to-transparent border border-orange-400/30 rounded-xl p-4 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
             <div>
@@ -146,37 +147,6 @@ export default function Page() {
             >
               View InsightLab →
             </Link>
-          </div>
-
-              <Link
-                href="https://instagram.com"
-                target="_blank"
-                className="text-orange-300/80 hover:text-orange-200"
-              >
-                Instagram →
-              </Link>
-              <Link
-                href="https://tiktok.com"
-                target="_blank"
-                className="text-orange-300/80 hover:text-orange-200"
-              >
-                TikTok →
-              </Link>
-              <Link
-                href="https://twitter.com"
-                target="_blank"
-                className="text-orange-300/80 hover:text-orange-200"
-              >
-                Twitter →
-              </Link>
-              <Link
-                href="https://snapchat.com"
-                target="_blank"
-                className="text-orange-300/80 hover:text-orange-200"
-              >
-                Snapchat →
-              </Link>
-            </div>
           </div>
         </div>
       </section>
