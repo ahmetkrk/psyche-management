@@ -148,15 +148,6 @@ export default function Page() {
             </Link>
           </div>
 
-          {/* Social Reminder */}
-          <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-            <p className="text-sm font-medium text-white mb-1">Stay updated</p>
-            <p className="text-xs text-white/60 mb-3">
-              Light reminder: don&apos;t forget to check Instagram, TikTok,
-              Twitter and Snapchat — short-form updates usually show up there
-              first.
-            </p>
-            <div className="flex flex-wrap gap-3 text-xs">
               <Link
                 href="https://instagram.com"
                 target="_blank"
