@@ -1,5 +1,4 @@
 "use client";
-
 import Link from "next/link";
 
 export function SocialLinks() {
@@ -13,6 +12,16 @@ export function SocialLinks() {
         aria-label="YouTube"
       >
         YT
+      </Link>
+      
+            {/* Tiktok */}
+      <Link
+        href="https://www.tiktok.com/@swb.ai"
+        target="_blank"
+        className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-white/15 bg-white/5 hover:bg-white/15 hover:text-orange-200 transition"
+        aria-label="YouTube"
+      >
+        TT
       </Link>
 
       {/* Instagram */}
