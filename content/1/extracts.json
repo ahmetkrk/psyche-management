@@ -1,0 +1,26 @@
+[
+  {
+    "id": "mind-brain-system",
+    "title": "Mind & Brain as One System",
+    "summary": "The psyche is not a separate mystical entity but a dynamic system created by brain, body, environment and habits.",
+    "order": 1
+  },
+  {
+    "id": "neuroplasticity-action",
+    "title": "Neuroplasticity Requires Action",
+    "summary": "Imagination activates circuits, but only repeated physical action rewires the brain in a meaningful way.",
+    "order": 2
+  },
+  {
+    "id": "systems-thinking",
+    "title": "Systems Thinking Over Concept Soup",
+    "summary": "Instead of fighting over terms like ego or anxiety, we look at how beliefs, emotions, drives and environment interact.",
+    "order": 3
+  },
+  {
+    "id": "dmn-story-loop",
+    "title": "Default Mode Network & Story Loops",
+    "summary": "Overactive DMN keeps you in narrative mode. The Psyche System focuses on closing the gap between inner story and outer action.",
+    "order": 4
+  }
+]
