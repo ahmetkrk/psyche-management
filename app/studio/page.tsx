@@ -29,7 +29,7 @@ const PRODUCTS: Product[] = [
   {
     key: "ebook",
     title: "Psyche System E-Book",
-    desc: "A structured guide to the 200-step Nafs + IQ/EQ roadmap, with practical exercises and reflections.",
+    desc: "A structured guide to the 200-step Psyche + IQ/EQ roadmap, with practical exercises and reflections.",
     tag: "Writing in progress",
   },
   {
