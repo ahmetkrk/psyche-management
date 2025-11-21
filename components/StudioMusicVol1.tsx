@@ -80,7 +80,7 @@ export function StudioMusicVol1() {
               SWB-AI sound.
             </p>
             <ul className="text-xs text-gray-400 space-y-1 mt-3">
-              <li>· 24-bit WAV stems (kick, snare, hats, bass, leads, pads)</li>
+              <li>· 16-bit WAV stems (kick, snare, hats, bass, leads, pads)</li>
               <li>· Commercial-use license for music producers*</li>
               <li>· Ideal for re-sampling, layering and hybrid production</li>
             </ul>
