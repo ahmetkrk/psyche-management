@@ -8,7 +8,7 @@ export default function InsightLabPage() {
       {/* Episode 1 card */}
       <section className="border border-white/15 rounded-2xl p-6 md:p-8 bg-white/5">
         <p className="text-xs tracking-wide text-white/60">
-          InsightLab · Episode 1
+          InsightLab · Understanding the Psyche System — AI, Awareness & Mental Structure
         </p>
 
         <h2 className="text-2xl font-semibold mt-2">
