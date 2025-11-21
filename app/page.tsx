@@ -1,5 +1,6 @@
 "use client";
 
+import { SocialLinks } from "@/components/SocialLinks";
 import { useEffect } from "react";
 import Link from "next/link";
 import { swbTrackPage } from "@/lib/analytics";
