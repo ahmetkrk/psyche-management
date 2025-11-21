@@ -41,7 +41,7 @@ export default function StudioMusicPage() {
         <h1 className="text-3xl font-semibold">Music Library</h1>
         <p className="text-sm text-white/70 max-w-2xl">
           Browse SWB-AI music albums and packs – each designed for InsightLab,
-          Nafs and long-form content production.
+          Psyche and long-form content production.
         </p>
       </header>
 
