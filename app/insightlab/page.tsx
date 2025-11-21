@@ -3,7 +3,6 @@ import Link from "next/link";
 export default function InsightLabPage() {
   return (
     <main className="max-w-3xl mx-auto px-6 py-16 text-white">
-
       <h1 className="text-3xl font-semibold mb-8">InsightLab</h1>
 
       {/* Episode 1 card */}
@@ -16,7 +15,7 @@ export default function InsightLabPage() {
           Scientific Foundations of the Psyche
         </h2>
 
-        <p className="text-white/70 mt-3">
+        <p className="text-white/70 mt-3 leading-relaxed">
           Introduction to the Psyche System: why modern people get stuck and how story turns into action.
         </p>
 
