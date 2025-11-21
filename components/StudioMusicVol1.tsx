@@ -10,7 +10,8 @@ const MUSIC_PACK_CHECKOUT =
 const STEM_PACK_CHECKOUT =
   "https://swb-ai.lemonsqueezy.com/buy/e34480a1-860d-44c2-b9d5-a79f4b986798";
 
-export function StudioMusicPage() {
+// 🔴 ÖNEMLİ: Artık default değil, NAMED export
+export function StudioMusicVol1() {
   useEffect(() => {
     swbTrackPage("studio_music", { source: "studio" });
   }, []);
