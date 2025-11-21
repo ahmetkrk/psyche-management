@@ -22,7 +22,7 @@ export default function StudioEbooksPage() {
           Psyche System E-Book
         </h1>
         <p className="text-sm md:text-base text-gray-300 max-w-2xl mx-0 md:mx-auto">
-          A written companion to the Psyche System videos: 200 steps of Nafs +
+          A written companion to the Psyche System videos: 200 steps of Pscyhe +
           IQ/EQ development, structured as a practical roadmap instead of
           abstract theory.
         </p>
@@ -31,8 +31,8 @@ export default function StudioEbooksPage() {
       <section className="space-y-4 text-sm text-gray-200">
         <p>
           The first e-book focuses on the{" "}
-          <strong>“200 Basamak: Nefs + IQ/EQ Gelişim Yol Haritası”</strong>.
-          It breaks down the journey from Nefs-i Emmâre to higher awareness
+          <strong>“200 steps: Psyche + IQ/EQ Map”</strong>.
+          It breaks down the journey from materialistic thinking to higher awareness
           into clear, named stages with concrete examples.
         </p>
         <p>
@@ -42,7 +42,7 @@ export default function StudioEbooksPage() {
           actually move on it.
         </p>
         <ul className="list-disc list-inside space-y-2 text-gray-300 mt-2">
-          <li>1–100: Nefs stages, from raw impulses to disciplined self.</li>
+          <li>1–100: Psyche stages, from raw impulses to disciplined self.</li>
           <li>IQ & EQ integration: thinking clearly while feeling deeply.</li>
           <li>
             Reflection prompts and journaling questions for each chapter
