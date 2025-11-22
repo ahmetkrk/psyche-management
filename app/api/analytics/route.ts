@@ -1,54 +1,51 @@
+// app/api/analytics/route.ts
 import { NextRequest, NextResponse } from "next/server";
+import { Pool } from "pg";
+import crypto from "crypto";
 
-// basit in-memory rate limit
-const RATE_LIMIT_WINDOW_MS = 60_000;
-const RATE_LIMIT_MAX = 60;
-const buckets = new Map<string, { count: number; ts: number }>();
+// Node runtime (pg kullanıyoruz)
+export const runtime = "nodejs";
 
-function isRateLimited(ip: string) {
-  const now = Date.now();
-  const entry = buckets.get(ip);
-  if (!entry) {
-    buckets.set(ip, { count: 1, ts: now });
-    return false;
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+});
+
+// IP hash için gizli salt (env'den)
+const IP_SALT = process.env.ANALYTICS_IP_SALT || "";
+
+// Gelen event'in tipi (lib/analytics.ts ile uyumlu)
+type IncomingEvent = {
+  schema: string;
+  schema_version: number;
+  event_name: string;
+  section_key: string;
+  action_key: string;
+  page_location: string;
+  session_id: string;
+  timestamp: string;
+  meta?: Record<string, any>;
+};
+
+function getClientIp(req: NextRequest): string | null {
+  const xfwd = req.headers.get("x-forwarded-for");
+  if (xfwd) {
+    const [ip] = xfwd.split(",");
+    return ip?.trim() || null;
   }
-  if (now - entry.ts > RATE_LIMIT_WINDOW_MS) {
-    buckets.set(ip, { count: 1, ts: now });
-    return false;
-  }
-  entry.count += 1;
-  return entry.count > RATE_LIMIT_MAX;
+  const realIp =
+    req.headers.get("x-real-ip") || req.headers.get("cf-connecting-ip");
+  return realIp || null;
 }
 
-// tek pool
-let pgPool: any = null;
-async function getPgPool() {
-  if (pgPool) return pgPool;
-
-  // TS burada şikayet ediyordu, susturalım
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-expect-error - 'pg' için tip yüklemedik, runtime'da var
-  const { Pool } = await import("pg");
-
-  pgPool = new Pool({
-    connectionString: process.env.DATABASE_URL,
-  });
-  return pgPool;
+function hashIp(ip: string | null): string | null {
+  if (!ip || !IP_SALT) return null;
+  const h = crypto.createHash("sha256");
+  h.update(ip + IP_SALT);
+  return h.digest("hex");
 }
 
-export async function POST(req: NextRequest) {
-  const ip = req.headers.get("x-forwarded-for") || req.ip || "unknown";
-  if (ip && isRateLimited(ip)) {
-    return NextResponse.json({ ok: false, error: "rate_limited" }, { status: 429 });
-  }
-
-  let body: any;
-  try {
-    body = await req.json();
-  } catch (err) {
-    console.error("analytics_invalid_json", err);
-    return NextResponse.json({ ok: false, error: "invalid_json" }, { status: 400 });
-  }
+function isValidEvent(body: any): body is IncomingEvent {
+  if (!body || typeof body !== "object") return false;
 
   const required = [
     "schema",
@@ -61,20 +58,73 @@ export async function POST(req: NextRequest) {
     "timestamp",
   ] as const;
 
-  const missing = required.filter((k) => !body[k]);
-  if (missing.length) {
-    console.error("analytics_invalid_event_missing_fields", { missing, body });
-    return NextResponse.json({ ok: false, error: "missing_fields", missing }, { status: 400 });
+  for (const key of required) {
+    if (!(key in body)) return false;
   }
 
-  // DB varsa yaz, yoksa logla
-  if (process.env.DATABASE_URL) {
+  if (typeof body.schema !== "string") return false;
+  if (typeof body.schema_version !== "number") return false;
+  if (typeof body.event_name !== "string") return false;
+  if (typeof body.section_key !== "string") return false;
+  if (typeof body.action_key !== "string") return false;
+  if (typeof body.page_location !== "string") return false;
+  if (typeof body.session_id !== "string") return false;
+  if (typeof body.timestamp !== "string") return false;
+
+  return true;
+}
+
+// Sağlık kontrolü / basit debug
+export function GET() {
+  return NextResponse.json({ ok: true, service: "swb-analytics" });
+}
+
+export async function POST(req: NextRequest) {
+  // Body'i al
+  const body = await req.json().catch(() => null);
+
+  if (!isValidEvent(body)) {
+    return NextResponse.json(
+      { ok: false, error: "Invalid payload" },
+      { status: 400 }
+    );
+  }
+
+  const clientIp = getClientIp(req);
+  const ipHash = hashIp(clientIp);
+  const userAgent = req.headers.get("user-agent") || null;
+
+  // Eğer DB yoksa: sadece logla, hata verme
+  if (!process.env.DATABASE_URL) {
+    console.info("[analytics] (no DB configured)", {
+      ...body,
+      ip_hash: ipHash,
+      user_agent: userAgent,
+    });
+    return NextResponse.json({ ok: true, stored: false });
+  }
+
+  try {
+    const client = await pool.connect();
+
     try {
-      const pool = await getPgPool();
-      await pool.query(
-        `INSERT INTO swb_events
-          (schema, schema_version, event, section_key, action_key, page_location, session_id, timestamp, meta)
-         VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)`,
+      await client.query(
+        `
+        INSERT INTO swb_events (
+          schema,
+          schema_version,
+          event_name,
+          section_key,
+          action_key,
+          page_location,
+          session_id,
+          client_timestamp,
+          meta,
+          ip_hash,
+          user_agent
+        )
+        VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)
+        `,
         [
           body.schema,
           body.schema_version,
@@ -84,16 +134,21 @@ export async function POST(req: NextRequest) {
           body.page_location,
           body.session_id,
           body.timestamp,
-          body.meta ?? {},
+          body.meta || {},
+          ipHash,
+          userAgent,
         ]
       );
-    } catch (err) {
-      console.error("analytics_db_write_error", err);
-      // build'i patlatmıyoruz
+    } finally {
+      client.release();
     }
-  } else {
-    console.info("analytics_event", body);
-  }
 
-  return NextResponse.json({ ok: true });
+    return NextResponse.json({ ok: true, stored: true });
+  } catch (err) {
+    console.error("[analytics] DB insert error", err);
+    return NextResponse.json(
+      { ok: false, error: "DB error" },
+      { status: 500 }
+    );
+  }
 }
