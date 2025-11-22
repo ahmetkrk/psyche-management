@@ -1,4 +1,5 @@
 // lib/analytics.ts
+
 export const SWB_SCHEMA = "swb";
 export const SWB_SCHEMA_VERSION = 1 as const;
 
@@ -26,50 +27,115 @@ const ANALYTICS_ENDPOINT = "/api/analytics";
 const SESSION_KEY = "swb_session_id";
 const UTM_KEY = "swb_utm_source_info";
 
+const isBrowser = typeof window !== "undefined";
+
+/**
+ * localStorage güvenli okuma
+ */
+function safeGetItem(key: string): string | null {
+  if (!isBrowser) return null;
+  try {
+    return window.localStorage.getItem(key);
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * localStorage güvenli yazma
+ */
+function safeSetItem(key: string, value: string) {
+  if (!isBrowser) return;
+  try {
+    window.localStorage.setItem(key, value);
+  } catch {
+    // storage kapalı / quota dolu vs. ise sessiz geç
+  }
+}
+
+/**
+ * dataLayer'ı garantiye al
+ */
 function ensureDataLayer() {
-  if (typeof window === "undefined") return;
+  if (!isBrowser) return;
   (window as any).dataLayer = (window as any).dataLayer || [];
 }
 
+/**
+ * Şu anki tam URL
+ */
 function getPageLocation() {
-  if (typeof window === "undefined") return "";
+  if (!isBrowser) return "";
   return window.location.href;
 }
 
+/**
+ * crypto.randomUUID + fallback
+ */
+function createSessionId(): string {
+  if (typeof crypto !== "undefined" && "randomUUID" in crypto) {
+    return crypto.randomUUID();
+  }
+  // Eski tarayıcılar için basit fallback
+  return (
+    Math.random().toString(36).slice(2) +
+    "-" +
+    Date.now().toString(36) +
+    "-" +
+    Math.random().toString(36).slice(2)
+  );
+}
+
+/**
+ * Session ID üret / oku
+ */
 function getOrCreateSessionId() {
-  if (typeof window === "undefined") return "";
-  let sid = window.localStorage.getItem(SESSION_KEY);
+  if (!isBrowser) return "";
+  let sid = safeGetItem(SESSION_KEY);
   if (!sid) {
-    sid = crypto.randomUUID();
-    window.localStorage.setItem(SESSION_KEY, sid);
+    sid = createSessionId();
+    safeSetItem(SESSION_KEY, sid);
   }
   return sid;
 }
 
+/**
+ * UTM parametrelerini sadece ilk gelişte yakala
+ */
 function captureUTMOnce() {
-  if (typeof window === "undefined") return;
-  const existing = window.localStorage.getItem(UTM_KEY);
+  if (!isBrowser) return;
+
+  const existing = safeGetItem(UTM_KEY);
   if (existing) return;
-  const url = new URL(window.location.href);
+
+  let url: URL;
+  try {
+    url = new URL(window.location.href);
+  } catch {
+    return;
+  }
+
   const utm_source = url.searchParams.get("utm_source");
   const utm_medium = url.searchParams.get("utm_medium");
   const utm_campaign = url.searchParams.get("utm_campaign");
+
   if (utm_source || utm_medium || utm_campaign) {
-    window.localStorage.setItem(
-      UTM_KEY,
-      JSON.stringify({
-        utm_source,
-        utm_medium,
-        utm_campaign,
-        first_seen: new Date().toISOString(),
-      })
-    );
+    const payload = JSON.stringify({
+      utm_source,
+      utm_medium,
+      utm_campaign,
+      first_seen: new Date().toISOString(),
+    });
+    safeSetItem(UTM_KEY, payload);
   }
 }
 
+/**
+ * localStorage'daki UTM bilgisini oku
+ */
 function getStoredUTM(): Record<string, any> | undefined {
-  if (typeof window === "undefined") return;
-  const raw = window.localStorage.getItem(UTM_KEY);
+  if (!isBrowser) return;
+  const raw = safeGetItem(UTM_KEY);
   if (!raw) return;
   try {
     return JSON.parse(raw);
@@ -78,13 +144,16 @@ function getStoredUTM(): Record<string, any> | undefined {
   }
 }
 
+/**
+ * Core event tracker
+ */
 export function swbTrackEvent(
   event_name: SWBEventName,
   section_key: string,
   action_key: string,
   meta: SWBEventMeta = {}
 ) {
-  if (typeof window === "undefined") return;
+  if (!isBrowser) return;
 
   captureUTMOnce();
 
@@ -103,12 +172,14 @@ export function swbTrackEvent(
     },
   };
 
+  // GTM / dataLayer
   ensureDataLayer();
   (window as any).dataLayer.push({
     event: payload.event_name,
     ...payload,
   });
 
+  // Backend'e gönder
   try {
     fetch(ANALYTICS_ENDPOINT, {
       method: "POST",
@@ -116,21 +187,39 @@ export function swbTrackEvent(
       body: JSON.stringify(payload),
       keepalive: true,
     }).catch(() => {});
-  } catch (e) {}
+  } catch {
+    // fetch hata verirse sessiz geç
+  }
 }
 
+/**
+ * Sayfa görüntüleme
+ */
 export function swbTrackPage(section_key: string, meta: SWBEventMeta = {}) {
   swbTrackEvent("virtual_page_view", section_key, "page_view", meta);
 }
 
-export function swbTrackClick(section_key: string, action_key: string, meta: SWBEventMeta = {}) {
+/**
+ * Click event
+ */
+export function swbTrackClick(
+  section_key: string,
+  action_key: string,
+  meta: SWBEventMeta = {}
+) {
   swbTrackEvent("click_action", section_key, action_key, meta);
 }
 
+/**
+ * Scroll depth
+ */
 export function swbTrackScroll(section_key: string, depth: number) {
   swbTrackEvent("scroll_depth", section_key, "scroll", { depth });
 }
 
+/**
+ * URL → section mapping
+ */
 export function mapPathToSection(path: string): string {
   if (path === "/") return "iam";
   if (path.startsWith("/insightlab")) return "insidelab";
